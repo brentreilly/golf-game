@@ -2,7 +2,7 @@
 
 - **Date:** 2026-02-17
 - **Issue:** None
-- **PR:** (pending)
+- **PR:** https://github.com/brentreilly/reilly-boys-arcade/pull/2
 - **Type:** new-feature
 
 ## Summary
