@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <title>Links - Golf Simulator</title>
+  <title>Links — Hudson's Arcade</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -548,9 +548,33 @@
     #complete-prompt {
       margin-top: 24px;
     }
+    /* ---- Back to Arcade ---- */
+    #back-btn {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 200;
+      background: rgba(0,0,0,0.6);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      font-family: inherit;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      pointer-events: auto;
+      -webkit-tap-highlight-color: transparent;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    #back-btn:active {
+      background: rgba(255,255,255,0.2);
+    }
   </style>
 </head>
 <body>
+  <a id="back-btn" href="/">← ARCADE</a>
   <canvas id="game-canvas"></canvas>
   <div id="ui-overlay"></div>
 
