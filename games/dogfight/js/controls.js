@@ -29,8 +29,12 @@ export class Controls {
   }
 
   setupTouch() {
-    // Prevent default on the whole document to avoid scrolling/zooming
-    document.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
+    // Prevent default on the whole document to avoid scrolling/zooming,
+    // but allow default on UI overlays so click events still fire on Silk browser
+    document.addEventListener('touchstart', (e) => {
+      if (e.target.closest('#start-screen, #gameover-screen, #pause-screen, #back-btn')) return;
+      e.preventDefault();
+    }, { passive: false });
 
     // --- Fire button ---
     this.fireBtn.addEventListener('touchstart', (e) => {
