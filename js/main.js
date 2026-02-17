@@ -322,6 +322,7 @@ class GolfGame {
     this.ui.showClubSelector(false);
     this.ui.showSwingButton(false);
     this.ui.showTouchAim(false);
+    this.ui.showSpinSelector(false);
     this.ui.showAimControls(false);
     this.renderer.hideAimLine();
     this.renderer.clearTrail();
@@ -350,6 +351,8 @@ class GolfGame {
     this.ui.showClubSelector(true);
     this.ui.showSwingButton(true);
     this.ui.showTouchAim(true);
+    this.ui.showSpinSelector(surface !== 'green');
+    this.ui.resetSpin();
     this.ui.showAimControls(true);
     this.renderer.clearTrail();
 
@@ -424,6 +427,7 @@ class GolfGame {
     this.ui.showAimControls(false);
     this.ui.showClubSelector(false);
     this.ui.showTouchAim(false);
+    this.ui.showSpinSelector(false);
     this.renderer.hideAimLine();
     // Keep swing button visible during swing phases
   }
@@ -435,6 +439,7 @@ class GolfGame {
     this.ui.showAimControls(false);
     this.ui.showClubSelector(false);
     this.ui.showTouchAim(false);
+    this.ui.showSpinSelector(false);
     this.renderer.hideAimLine();
   }
 
@@ -443,6 +448,7 @@ class GolfGame {
     const club = CLUBS[this.selectedClubIndex];
     const power = this.swing.power;
     const accuracy = this.swing.accuracy;
+    const spinMult = this.ui.getSpinMultiplier();
 
     this.ui.hideSwingMeter();
     this.ui.showSwingButton(false);
@@ -450,8 +456,8 @@ class GolfGame {
     // Store start position
     this.shotStartPos = { ...this.ball.position };
 
-    // Launch ball
-    this.physics.launch(this.ball, this.ball.position, club, power, accuracy, this.aimDirection);
+    // Launch ball with spin
+    this.physics.launch(this.ball, this.ball.position, club, power, accuracy, this.aimDirection, spinMult);
 
     // Switch to flight camera
     this.camera.setFollow(this.ball.position);
@@ -543,6 +549,7 @@ class GolfGame {
     this.renderer.updateBall(this.ball.position, false, this.terrain ? this.terrain.getElevation(this.ball.position.x, this.ball.position.z) : 0);
     this.ui.showSwingButton(false);
     this.ui.showTouchAim(false);
+    this.ui.showSpinSelector(false);
 
     this.ui.showMessage(scoreName,
       `${this.strokes} stroke${this.strokes > 1 ? 's' : ''} on a Par ${this.currentHole.par}`,

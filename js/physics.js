@@ -41,7 +41,8 @@ export class PhysicsEngine {
   }
 
   // Launch ball from a position with given club parameters and swing result
-  launch(ball, position, club, power, accuracy, aimDirection) {
+  // spinMult: <0 = topspin (less lift, more roll), 1 = normal, >1 = extra backspin (bite)
+  launch(ball, position, club, power, accuracy, aimDirection, spinMult = 1.0) {
     ball.position.x = position.x;
     ball.position.y = position.y;
     ball.position.z = position.z;
@@ -81,7 +82,8 @@ export class PhysicsEngine {
 
       // Spin: backspin around -x axis (right-hand rule: top moves backward = -x angular velocity)
       // This creates upward Magnus lift via ω × v
-      ball.spin.x = -club.backspin * RPM_TO_RADS * power;
+      // spinMult scales backspin: >1 = more bite, <0 = topspin (roll out)
+      ball.spin.x = -club.backspin * RPM_TO_RADS * power * spinMult;
       ball.spin.y = accuracyOffset * 50 * RPM_TO_RADS; // sidespin from mis-hit
       ball.spin.z = 0;
       ball.isAirborne = true;
