@@ -116,15 +116,29 @@ class Game {
     zones.addEventListener('pointercancel', pointerUp);
     zones.addEventListener('pointerleave', pointerUp);
 
-    // Hard drop: swipe down on canvas
+    // Silk browser fallback: touchend/touchcancel may fire when pointerleave does not
+    zones.addEventListener('touchend', () => {
+      this.activePointers.clear();
+      this.repeating = false;
+      this.repeatTimer = 0;
+    });
+    zones.addEventListener('touchcancel', () => {
+      this.activePointers.clear();
+      this.repeating = false;
+      this.repeatTimer = 0;
+    });
+
+    // Hard drop: swipe down on canvas (only in the grid area, not touch zones)
     this.canvas.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      if (e.clientY > this.height - 100) return; // ignore touch zone area
       this.swipeStartY = e.clientY;
     });
     this.canvas.addEventListener('pointermove', (e) => {
       if (this.swipeStartY !== null && this.state === STATE.PLAYING) {
         if (e.clientY - this.swipeStartY > 30) {
           this.doHardDrop();
-          this.swipeStartY = null; // consume the swipe
+          this.swipeStartY = null;
         }
       }
     });

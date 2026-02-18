@@ -42,7 +42,7 @@ export class Particles {
   // gridX / gridWidth are in pixel coordinates (from Renderer).
 
   emitLine(y, gridX, gridWidth, color) {
-    const count = 18;
+    const count = 12;
     for (let i = 0; i < count; i++) {
       const p = this._next();
       if (!p) return;
